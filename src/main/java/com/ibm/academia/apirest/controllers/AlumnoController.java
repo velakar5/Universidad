@@ -34,6 +34,13 @@ public class AlumnoController {
 
 	}
 
+	/**
+	 * Obtener todos los alumnos
+	 * 
+	 * @NotFoundException En caso de que falle actualizando el objeto de alumno
+	 * @return Retorna una lista de tipo alumno con la info actualizada
+	 * @Author Carlos Velazquez
+	 */
 	@GetMapping("/todos")
 	public ResponseEntity<?> obtenerTodos() {
 		List<Persona> alumnos = (List<Persona>) alumnoDao.buscarTodos();
@@ -44,6 +51,15 @@ public class AlumnoController {
 		return new ResponseEntity<List<Persona>>(alumnos, HttpStatus.OK);
 	}
 
+
+	/**
+	 * Obtener alumnos por Id
+	 * 
+	 * @param aulaId Parametro para buscar la aula
+	 * @NotFoundException En caso de que falle actualizando el objeto de alumno
+	 * @return Retorna una lista de tipo alumno con la info actualizada
+	 * @Author Carlos Velazquez
+	 */
 	@GetMapping("/alumnoId/{alumnoId}")
 	public ResponseEntity<?> obtenerAlumnoId(@PathVariable Integer alumnoId) {
 
@@ -56,6 +72,15 @@ public class AlumnoController {
 		return new ResponseEntity<Persona>(oAlumno.get(), HttpStatus.OK);
 	}
 
+	/**
+	 * Actualizar un alumno
+	 * 
+	 * @param alumnoId Parametro para buscar la alumno
+	 * @param alumno   objeto (json con la informacion a modificar)
+	 * @NotFoundException En caso de que falle actualizando el objeto de alumno
+	 * @return Retorna un objeto de tipo alumno con la info actualizada
+	 * @Author Carlos Velazquez
+	 */
 	@PutMapping("/update/alumnoId/{alumnoId}")
 	public ResponseEntity<?> actualizarAlumno(@PathVariable Integer alumnoId, @RequestBody Persona alumno) {
 		Optional<Persona> oAlumno = alumnoDao.buscarPorId(alumnoId);
@@ -66,6 +91,14 @@ public class AlumnoController {
 		return new ResponseEntity<Persona>(alumnoActualizado, HttpStatus.OK);
 	}
 
+	/**
+	 * eliminar un alumno
+	 * 
+	 * @param alumnoId Parametro para eliminar la aula
+	 * @NotFoundException En caso de que falle eliminacion el objeto de alumno
+	 * @return Retorna un mensaje con la confirmacion de la eliminacion
+	 * @Author Carlos Velazquez
+	 */
 	@DeleteMapping("/alumnoId/{alumnoId}")
 	public ResponseEntity<?> eliminarAlumno(@PathVariable Integer alumnoId) {
 
@@ -78,6 +111,15 @@ public class AlumnoController {
 		return new ResponseEntity<String>("Alumno ID: " + alumnoId + " se elimino satisfactoriamente", HttpStatus.OK);
 	}
 
+	/**
+	 * Asignar una carrera a un alumno
+	 * 
+	 * @param alumnoId Parametro para buscar el alumno
+	 * @param carreraId   Parametro para buscar la carrera
+	 * @NotFoundException En caso de que falle actualizando el objeto de carrera o alumno
+	 * @return Retorna un objeto de tipo alumno con la info actualizada
+	 * @Author Carlos Velazquez
+	 */
 	@PutMapping("/alumnoId/{alumnoId}/carrera/{carreraId}")
 	public ResponseEntity<?> asignarCarreraAlumno(@PathVariable Integer alumnoId, @PathVariable Integer carreraId) {
 		Optional<Persona> oAlumno = alumnoDao.buscarPorId(alumnoId);

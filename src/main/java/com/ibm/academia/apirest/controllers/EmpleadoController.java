@@ -29,6 +29,13 @@ public class EmpleadoController {
 	@Qualifier("empleadoDAOImplements")
 	private PersonaDAO empleadoDao;
 	
+	/**
+	 * Obtener todos los empleados
+	 * 
+	 * @NotFoundException En caso de que falle actualizando el objeto de empleado
+	 * @return Retorna una lista de tipo empleado con la info actualizada
+	 * @Author Carlos Velazquez
+	 */
 	@GetMapping("/todos")
 	public ResponseEntity<?> obtenerTodos(){
 		List<Persona> empleados = (List<Persona>) empleadoDao.buscarTodos();
@@ -37,12 +44,29 @@ public class EmpleadoController {
 		return new ResponseEntity<List<Persona>>(empleados,HttpStatus.OK);
 	}
 	
+	/**
+	 * guardar un empleado
+	 * 
+	 * @param empleado   objeto (json con la informacion a modificar)
+	 * @NotFoundException En caso de que falle actualizando el objeto de alumno
+	 * @return Retorna un objeto de tipo empleado con la info actualizada
+	 * @Author Carlos Velazquez
+	 */
 	@PostMapping
 	public ResponseEntity<?> creaEmpleado(@RequestBody Persona empleado){
 		Persona empleadoGuardado = empleadoDao.guardar(empleado);
 		return new ResponseEntity<Persona>(empleadoGuardado,HttpStatus.CREATED);
 	}
 	
+	/**
+	 * Actualizar un empleado
+	 * 
+	 * @param empleadoId Parametro para buscar la empleado
+	 * @param empleado   objeto (json con la informacion a modificar)
+	 * @NotFoundException En caso de que falle actualizando el objeto de empleado
+	 * @return Retorna un objeto de tipo empleado con la info actualizada
+	 * @Author Carlos Velazquez
+	 */
 	@PutMapping("/{empleadoId}")
 	public ResponseEntity<?> actualizaEmpleado(@PathVariable Integer empleadoId, @RequestBody Persona empleado){
 		Optional<Persona> oEmpleado = empleadoDao.buscarPorId(empleadoId);
@@ -52,6 +76,14 @@ public class EmpleadoController {
 		return new ResponseEntity<Persona>(empleadoActualizado,HttpStatus.OK);
 	}
 	
+	/**
+	 * eliminar un empleado
+	 * 
+	 * @param empleadoId Parametro para eliminar la aula
+	 * @NotFoundException En caso de que falle eliminacion el objeto de empleado
+	 * @return Retorna un mensaje con la confirmacion de la eliminacion
+	 * @Author Carlos Velazquez
+	 */
 	@DeleteMapping("/{empleadoId}")
 	public ResponseEntity<?> eliminaEmpleado(@PathVariable Integer empleadoId){
 		Optional<Persona> oEmpleado = empleadoDao.buscarPorId(empleadoId);

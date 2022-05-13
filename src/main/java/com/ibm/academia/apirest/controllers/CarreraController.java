@@ -26,6 +26,13 @@ public class CarreraController {
 	private CarreraDAO carreraDAO;
 
 
+	/**
+	 * Obtener todos las carreras
+	 * 
+	 * @NotFoundException En caso de que falle actualizando el objeto de carrera
+	 * @return Retorna una lista de tipo carrera con la info actualizada
+	 * @Author Carlos Velazquez
+	 */
 	@GetMapping("/lista/carreras")
 	public List<Carrera> buscarTodos() {
 
@@ -38,6 +45,14 @@ public class CarreraController {
 
 	}
 
+	/**
+	 * Obtener carrera por Id
+	 * 
+	 * @param carreraId Parametro para buscar la carrera
+	 * @NotFoundException En caso de que falle actualizando el objeto de carrera
+	 * @return Retorna una lista de tipo carrera con la info actualizada
+	 * @Author Carlos Velazquez
+	 */
 	@GetMapping("/id/{carreraId}")
 	public Carrera buscarCarreraPorId(@PathVariable Integer carreraId) {
 
@@ -49,6 +64,14 @@ public class CarreraController {
 		return carrera;
 	}
 
+	/**
+	 * guardar una carrera
+	 * 
+	 * @param carrera Objeto para guardar la carrera
+	 * @NotFoundException En caso de que falle actualizando el objeto de carrera
+	 * @return Retorna un objeto de tipo carrera con la info actualizada
+	 * @Author Carlos Velazquez
+	 */
 	@PostMapping
 	public ResponseEntity<?> guardarCarrera(@Valid @RequestBody Carrera carrera, BindingResult result) {
 
@@ -68,6 +91,15 @@ public class CarreraController {
 
 	
 
+	/**
+	 * Actualizar una carrera
+	 * 
+	 * @param carreraId Parametro para buscar la alumno
+	 * @param carrera objeto (json con la informacion a modificar)
+	 * @NotFoundException En caso de que falle actualizando el objeto de carrera
+	 * @return Retorna un objeto de tipo carrera con la info actualizada
+	 * @Author Carlos Velazquez
+	 */
 	@PutMapping("/update/carreraId/{carreraId}")
 	public ResponseEntity<?> actualizarCarrera(@PathVariable Integer carreraId, @RequestBody Carrera carrera) {
 		Optional<Carrera> oCarrera = carreraDAO.buscarPorId(carreraId);
@@ -78,6 +110,14 @@ public class CarreraController {
 		return new ResponseEntity<Carrera>(carreraActulizar, HttpStatus.OK);
 	}
 
+	/**
+	 * eliminar un carrera
+	 * 
+	 * @param carreraId Parametro para eliminar la aula
+	 * @NotFoundException En caso de que falle eliminacion el objeto de alumno
+	 * @return Retorna un mensaje con la confirmacion de la eliminacion
+	 * @Author Carlos Velazquez
+	 */
 	@DeleteMapping("/carreraId/{carreraId}")
 	public ResponseEntity<?> eliminarCarrera(@PathVariable Integer carreraId) {
 		Map<String, Object> respuesta = new HashMap<String, Object>();
@@ -91,6 +131,14 @@ public class CarreraController {
 
 	}
 	
+	/**
+	 * Obtener carrera por nombre y apellido
+	 * 
+	 * @param aulaId Parametro para buscar la carrera
+	 * @NotFoundException En caso de que falle actualizando el objeto de carrera
+	 * @return Retorna una lista de tipo carrera con la info actualizada
+	 * @Author Carlos Velazquez
+	 */
 	@GetMapping("/nombre/{nombre}/apellido/{apellido}")
 	public List<Carrera> buscarCarrerasPorProfesorNombreYApellido(@PathVariable String nombre, @PathVariable String apellido) {
 

@@ -27,6 +27,13 @@ public class PabellonController {
 	@Qualifier("pabellonDAOImplements")
 	private PabellonDAO pabellonDao;
 
+	/**
+	 * Obtener todos los pabellones por nombre
+	 * 
+	 * @NotFoundException En caso de que falle actualizando el objeto de pabellon
+	 * @return Retorna una lista de tipo empleado con la info actualizada
+	 * @Author Carlos Velazquez
+	 */
 	@GetMapping("/porNombres/{nombre}")
 	public ResponseEntity<?> buscarPorNombrePAbellon(@PathVariable String nombre) {
 		List<Pabellon> pabellones = pabellonDao.buscarPorNombre(nombre);
@@ -35,6 +42,15 @@ public class PabellonController {
 		return new ResponseEntity<List<Pabellon>>(pabellones, HttpStatus.OK);
 	}
 
+	
+	/**
+	 * Obtener pabellones por localidad
+	 * 
+	 * @param localidadId Parametro para buscar la localidad
+	 * @NotFoundException En caso de que falle actualizando el objeto de pabellon
+	 * @return Retorna una lista de tipo pabellon con la info actualizada
+	 * @Author Carlos Velazquez
+	 */
 	@GetMapping("porLocalidad/{localidad}")
 	public ResponseEntity<?> buscarPorLocalidad(@PathVariable String localidad) {
 		List<Pabellon> pabellones = pabellonDao.buscarPabellonesPorLocalidad(localidad);
@@ -43,12 +59,27 @@ public class PabellonController {
 		return new ResponseEntity<List<Pabellon>>(pabellones, HttpStatus.OK);
 	}
 	
+	/**
+	 * Obtener todos los pabellones
+	 * 
+	 * @NotFoundException En caso de que falle actualizando el objeto de pabellon
+	 * @return Retorna una lista de tipo pabellon con la info actualizada
+	 * @Author Carlos Velazquez
+	 */
 	@GetMapping
 	public ResponseEntity<?> obtenerTodos(){
 		List<Pabellon> pabellones = (List<Pabellon>) pabellonDao.buscarTodos();
 		return new ResponseEntity<List<Pabellon>>(pabellones, HttpStatus.OK);
 	}
 	
+	/**
+	 * Obtener pabellon por Id
+	 * 
+	 * @param pabellonId Parametro para buscar la pabellon
+	 * @NotFoundException En caso de que falle actualizando el objeto de pabellon
+	 * @return Retorna una lista de tipo pabellon con la info actualizada
+	 * @Author Carlos Velazquez
+	 */
 	@GetMapping("/pabellonId/{pabellonId}")
 	public ResponseEntity<?> obtenerPabellonID(@PathVariable Integer pabellonId) {
 		Optional<Pabellon> oPabellon = pabellonDao.buscarPorId(pabellonId);
@@ -57,6 +88,15 @@ public class PabellonController {
 		return new ResponseEntity<Pabellon>(oPabellon.get(), HttpStatus.OK);
 	}
 	
+	/**
+	 * Actualizar un pabellon
+	 * 
+	 * @param pabellonId Parametro para buscar el pabellon
+	 * @param pabellon   objeto (json con la informacion a modificar)
+	 * @NotFoundException En caso de que falle actualizando el objeto de pabellon
+	 * @return Retorna un objeto de tipo empleado con la info actualizada
+	 * @Author Carlos Velazquez
+	 */
 	@PutMapping("update/pabellonId/{pabellonId}")
 	public ResponseEntity<?> actualizarPabellon(@PathVariable Integer pabellonId, @RequestBody Pabellon pabellon) {
 		Optional<Pabellon> oPabellon = pabellonDao.buscarPorId(pabellonId);
@@ -66,6 +106,14 @@ public class PabellonController {
 		return new ResponseEntity<Pabellon>(pabellonActualizado, HttpStatus.OK);
 	}
 	
+	/**
+	 * eliminar un pabellon
+	 * 
+	 * @param empleadoId Parametro para eliminar un pabellon
+	 * @NotFoundException En caso de que falle eliminacion el objeto de empleado
+	 * @return Retorna un mensaje con la confirmacion de la eliminacion
+	 * @Author Carlos Velazquez
+	 */
 	@DeleteMapping("{pabellonId}")
 	public ResponseEntity<?> eliminarPabellon(@PathVariable Integer pabellonId) {
 		Optional<Pabellon> oPabellon = pabellonDao.buscarPorId(pabellonId);

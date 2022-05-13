@@ -42,12 +42,27 @@ public class ProfesorController {
 		return new ResponseEntity<Persona>(profesorGuardado, HttpStatus.CREATED);
 	}
 
+	/**
+	 * Obtener todos los profesores
+	 * 
+	 * @NotFoundException En caso de que falle actualizando el objeto de profesro
+	 * @return Retorna una lista de tipo profesor con la info actualizada
+	 * @Author Carlos Velazquez
+	 */
 	@GetMapping("/todos")
 	public ResponseEntity<?> obtenerTodos() {
 		List<Persona> profesores = (List<Persona>) profesorDao.buscarTodos();
 		return new ResponseEntity<List<Persona>>(profesores, HttpStatus.OK);
 	}
 
+	/**
+	 * Obtener profesor por Id
+	 * 
+	 * @param profesorId Parametro para buscar el profesor
+	 * @NotFoundException En caso de que falle actualizando el objeto de profesor
+	 * @return Retorna una lista de tipo profesor con la info actualizada
+	 * @Author Carlos Velazquez
+	 */
 	@GetMapping("/profesorId/{profesorId}")
 	public ResponseEntity<?> obtenerProfesorID(@PathVariable Integer profesorId) {
 		Optional<Persona> oProfesor = profesorDao.buscarPorId(profesorId);
@@ -56,6 +71,15 @@ public class ProfesorController {
 		return new ResponseEntity<Persona>(oProfesor.get(), HttpStatus.OK);
 	}
 
+	/**
+	 * Actualizar un profesor
+	 * 
+	 * @param profesorId Parametro para buscar la profesor
+	 * @param alumno   objeto (json con la informacion a modificar)
+	 * @NotFoundException En caso de que falle actualizando el objeto de profesor
+	 * @return Retorna un objeto de tipo profesor con la info actualizada
+	 * @Author Carlos Velazquez
+	 */
 	@PutMapping("update/profesorId/{profesorId}")
 	public ResponseEntity<?> actualizarProfesor(@PathVariable Integer profesorId, @RequestBody Persona profesor) {
 		Optional<Persona> oProfesor = profesorDao.buscarPorId(profesorId);
@@ -65,6 +89,14 @@ public class ProfesorController {
 		return new ResponseEntity<Persona>(profesorActualizado, HttpStatus.OK);
 	}
 
+	/**
+	 * eliminar un profesor
+	 * 
+	 * @param profesorId Parametro para eliminar el profesor
+	 * @NotFoundException En caso de que falle eliminacion el objeto de profesor
+	 * @return Retorna un mensaje con la confirmacion de la eliminacion
+	 * @Author Carlos Velazquez
+	 */
 	@DeleteMapping("{profesorId}")
 	public ResponseEntity<?> eliminarProfesor(@PathVariable Integer profesorId) {
 		Optional<Persona> oProfesor = profesorDao.buscarPorId(profesorId);
@@ -76,6 +108,15 @@ public class ProfesorController {
 
 	}
 
+	/**
+	 * Asignar una carrera a un profesor
+	 * 
+	 * @param profesorId Parametro para buscar el profesor
+	 * @param carreraId   Parametro para buscar la carrera
+	 * @NotFoundException En caso de que falle actualizando el objeto de carrera o profesor
+	 * @return Retorna un objeto de tipo profesor con la info actualizada
+	 * @Author Carlos Velazquez
+	 */
 	@PutMapping("/profesorId/{profesorId}/carrera/{carreraId}")
 	public ResponseEntity<?> asignarCarreraAlumno(@PathVariable Integer profesorId, @PathVariable Integer carreraId) {
 		Optional<Persona> oProfesor = profesorDao.buscarPorId(profesorId);
